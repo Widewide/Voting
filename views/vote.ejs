@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote for Your Favorite Party</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .party-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .party-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".button-click");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+            
+            // Get the associated form element
+            const form = button.closest("form");
+            if (!form) {
+                console.error("Form not found for the button");
+                return;
+            }
+
+            // Change the button's background color to indicate selection
+            button.style.backgroundColor = "red";
+
+            // Disable all buttons
+            disableotherbutton(buttons);
+
+            // Submit the form programmatically
+            form.submit(); 
+        });
+    });
+});
+
+function disableotherbutton(buttons) {
+    buttons.forEach((button) => {
+        button.disabled = true; // Disable the button
+        button.classList.add("disabled"); // Optional: Apply a disabled class
+    });
+
+    // Display a confirmation message
+    const message = document.createElement("p");
+    message.textContent = "Thank you for voting!";
+    message.style.color = "green";
+    document.body.appendChild(message);
+}
+
+    </script>
+</head>
+<body>
+    <h1>Vote for Your Favorite Party</h1>
+
+    <div class="party-list">
+        <% parties.forEach(party => { %>
+            <div class="party-item">
+                <h3><%= party.name %></h3>
+                <p>Leader: <%= party.leadername %></p>
+                <form action="/vote" method="POST">
+                    <input type="hidden" name="partyId" value="<%= party._id %>">
+                    <button type="submit" class="button-click">Vote for <%= party.name %></button>
+                </form>
+            </div>
+        <% }); %>
+    </div>
+
+    <form action="/" method="get">
+        <button>Home</button>
+    </form>
+</body>
+</html>

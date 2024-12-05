@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        form {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form p {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        form input, form select, form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #218838;
+        }
+        .note {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <form action="/signup" method="POST">
+        <h2>Signup</h2>
+        <p>Name</p>
+        <input type="text" name="name" placeholder="Enter your name" required>
+
+        <p>Email</p>
+        <input type="email" name="email" placeholder="Enter your email" required>
+
+        <p>Password</p>
+        <input type="password" name="password" placeholder="Enter your password" required>
+
+        <p>Age</p>
+        <input type="number" name="age" placeholder="Enter your age" required>
+
+        <p>Adhar Number</p>
+        <input type="number" name="adharnumber" placeholder="Enter your Adhar Number" required>
+
+        <p>Role</p>
+        <select name="isadmin" required>
+            <option value="">Select Role</option>
+            <option value="true">Admin</option>
+            <option value="false">User</option>
+        </select>
+
+        <button type="submit">Sign Up</button>
+        <p class="note">Already have an account? <a href="/login">Login</a></p>
+    </form>
+</body>
+</html>

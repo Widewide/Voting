@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Live Chat Section styles */
+        #live-chat {
+            margin-top: 30px;
+            width: 100%;
+            min-height: 300px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Optional: Add styling for message input */
+        #message-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Optional: Style for sending button */
+        #send-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Welcome to Home Page</h1>
+    
+    <section id="option">
+        <% if (body.isadmin) { %>
+            <form action="/admin">
+                <button type="submit">Admin Option</button>
+            </form>
+        <% } else { %>
+            <form action="/vote">
+                <button type="submit">Vote</button>
+            </form>
+        <% } %>
+    </section>
+    
+
+    <section id="live-voting">
+        <table>
+            <thead>
+                <tr>
+                    <th>Party Name</th>
+                    <th>Leader</th>
+                    <th>Votes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% parties.forEach(party => { %>
+                    <tr>
+                        <td><%= party.name %></td>
+                        <td><%= party.leadername %></td>
+                        <td><%= party.numberofvote %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="live-chat">
+        <!-- Live Chat Space -->
+        <h2>Live Chat</h2>
+        <p>Leave your message below:</p>
+        <textarea id="message-input" rows="4" placeholder="Type your message..."></textarea>
+        <button id="send-button">Send</button>
+    </section>
+</body>
+</html>

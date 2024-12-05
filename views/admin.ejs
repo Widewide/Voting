@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .admin-options, .new-party-form { margin: 20px 0; }
+        button { padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s; }
+        button:hover { background-color: #0056b3; }
+        input[type="text"], input[type="number"] { padding: 5px; width: 90%; }
+    </style>
+    <script>
+        async function addNewParty() {
+            const name = document.getElementById('newPartyName').value;
+            const leadername = document.getElementById('newPartyLeader').value;
+            const votes = parseInt(document.getElementById('newPartyVotes').value, 10) || 0;
+
+            if (!name || !leadername) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const response = await fetch("/admin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, leadername, vote: votes }),
+            });
+
+            if (response.ok) {
+                alert("Party added successfully!");
+                window.location.reload();
+            } else {
+                alert("Failed to add party.");
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                const response = await fetch('/logout', { method: 'POST' });
+                if (response.ok) {
+                    alert('Logged out successfully!');
+                    window.location.href = '/';
+                } else {
+                    alert('Failed to log out.');
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <button onclick="handleLogout()">Log out</button>
+
+    <form class="admin-options" action="/" method="GET">
+        <button type="submit">See Live Voting</button>
+    </form>
+
+    <h2>Manage Parties</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Party Name</th>
+                <th>Leader</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% parties.forEach(party => { %>
+                <tr>
+                    <td><%= party.name %></td>
+                    <td><%= party.leadername %></td>
+                    <td><%= party.numberofvote %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <div class="new-party-form">
+        <h3>Add New Party</h3>
+        <form id="newPartyForm" onsubmit="event.preventDefault(); addNewParty();">
+            <label>Party Name: <input type="text" id="newPartyName" required></label><br>
+            <label>Party Leader: <input type="text" id="newPartyLeader" required></label><br>
+            <label>Initial Votes: <input type="number" id="newPartyVotes" required></label><br>
+            <button type="submit">Create Party</button>
+        </form>
+    </div>
+</body>
+</html>
